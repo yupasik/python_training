@@ -34,6 +34,7 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_name("nickname").clear()
         wd.find_element_by_name("nickname").send_keys(Contact.nickname)
         wd.find_element_by_name("theform").click()
+        wd.find_element_by_name("photo").send_keys("E:\\STUDY\\FCSM.png")
         wd.find_element_by_name("title").click()
         wd.find_element_by_name("title").clear()
         wd.find_element_by_name("title").send_keys(Contact.title)
