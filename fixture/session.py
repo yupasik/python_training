@@ -16,6 +16,7 @@ class SessionHelper:
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_css_selector("input[type=\"submit\"]").click()
+
     def logout(self):
         wd = self.app.wd
         wd.find_element_by_link_text("Logout").click()
