@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 from selenium.webdriver.firefox.webdriver import WebDriver
+from fixture.session import SessionHelper
 
 class Application:
 
     def __init__(self):
         self.wd = WebDriver()
         self.wd.implicitly_wait(60)
-    def logout(self):
-        wd = self.wd
-        wd.find_element_by_link_text("Logout").click()
+        self.session = SessionHelper(self)
 
     def return_to_groups_page(self):
         wd = self.wd
@@ -36,18 +35,6 @@ class Application:
     def open_groups_page(self):
         wd = self.wd
         wd.find_element_by_link_text("groups").click()
-
-    def login(self, username, password):
-        wd = self.wd
-        self.open_home_page(wd)
-        # login
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_css_selector("input[type=\"submit\"]").click()
 
     def open_home_page(self, wd):
         wd.get("http://localhost/addressbook/")
