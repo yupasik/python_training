@@ -5,9 +5,8 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-    def create(self, Contact):
+    def fill_group_form(self, Contact):
         wd = self.app.wd
-        wd.find_element_by_link_text("add new").click()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(Contact.first_name)
@@ -20,8 +19,7 @@ class ContactHelper:
         wd.find_element_by_name("nickname").click()
         wd.find_element_by_name("nickname").clear()
         wd.find_element_by_name("nickname").send_keys(Contact.nickname)
-        wd.find_element_by_name("theform").click()
-        wd.find_element_by_name("photo").send_keys("E:\\STUDY\\FCSM.png")
+        wd.find_element_by_name("photo").send_keys(Contact.avatar)
         wd.find_element_by_name("title").click()
         wd.find_element_by_name("title").clear()
         wd.find_element_by_name("title").send_keys(Contact.title)
@@ -78,4 +76,21 @@ class ContactHelper:
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(Contact.notes)
+
+    def create(self, Contact):
+        wd = self.app.wd
+        wd.find_element_by_link_text("add new").click()
+        self.fill_group_form(Contact)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+
+    def edit_first_contact(self, Contact):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("img[alt=\"Edit\"]").click()
+        self.fill_group_form(Contact)
+        wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+
+    def delete_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
+        wd.switch_to_alert().accept()

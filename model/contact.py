@@ -2,13 +2,14 @@
 
 class Contact:
 
-    def __init__(self, first_name, middle_name, last_name, nickname, title, company, address, home_phone, mobile_phone,
+    def __init__(self, first_name, middle_name, last_name, nickname, avatar, title, company, address, home_phone, mobile_phone,
                  work_phone, fax, email_1, email_2, email_3, homepage, b_day, b_month, a_day, a_month, b_year, a_year,
                  address_2, phone_2, notes):
         self.first_name = first_name
         self.middle_name = middle_name
         self.last_name = last_name
         self.nickname = nickname
+        self.avatar = avatar
         self.title = title
         self.company = company
         self.address = address
