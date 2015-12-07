@@ -1,6 +1,9 @@
 from model.contact import Contact
 
+
 class ContactHelper:
+
+    contact_cache = None
 
     def __init__(self, app):
         self.app = app
@@ -44,6 +47,7 @@ class ContactHelper:
         self.fill_group_form(Contact)
         self.change_birthday_value(Contact.b_day, Contact.b_month, Contact.b_year)
         self.change_anniversary_value(Contact.a_day, Contact.a_month, Contact.a_year)
+        self.contact_cache = None
 
     def edit_group_form(self, Contact):
         wd = self.app.wd
@@ -54,6 +58,7 @@ class ContactHelper:
         self.fill_group_form(Contact)
         self.change_birthday_value(Contact.b_day, Contact.b_month, Contact.b_year)
         self.change_anniversary_value(Contact.a_day, Contact.a_month, Contact.a_year)
+        self.contact_cache = None
 
     def change_birthday_value(self, day, month, year):
         wd = self.app.wd
@@ -83,6 +88,7 @@ class ContactHelper:
         self.new_group_form(Contact)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def edit_first_contact(self, Contact):
         wd = self.app.wd
@@ -90,6 +96,7 @@ class ContactHelper:
         self.edit_group_form(Contact)
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def delete_first_contact(self):
         wd = self.app.wd
@@ -97,6 +104,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def count(self):
         wd = self.app.wd
@@ -107,10 +115,11 @@ class ContactHelper:
         wd.find_element_by_link_text("home").click()
 
     def get_contact_list(self):
-        wd = self.app.wd
-        contacts = []
-        for element in wd.find_elements_by_css_selector("tr")[1:]:
-            text = element.find_element_by_name("selected[]").get_attribute("title")
-            id = element.find_element_by_name("selected[]").get_attribute("id")
-            contacts.append(Contact(first_name=text.split()[1][1:], last_name=text.split()[2][:-1], id=id))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.contact_cache = []
+            for element in wd.find_elements_by_css_selector("tr")[1:]:
+                text = element.find_element_by_name("selected[]").get_attribute("title")
+                id = element.find_element_by_name("selected[]").get_attribute("id")
+                self.contact_cache.append(Contact(first_name=text.split()[1][1:], last_name=text.split()[2][:-1], id=id))
+        return self.contact_cache
