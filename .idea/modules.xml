@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../geom2d/.idea/geom2d.iml" filepath="$PROJECT_DIR$/../geom2d/.idea/geom2d.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/python_training.iml" filepath="$PROJECT_DIR$/.idea/python_training.iml" />
     </modules>
   </component>
