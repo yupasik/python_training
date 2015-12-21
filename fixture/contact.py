@@ -42,46 +42,28 @@ class ContactHelper:
         self.change_field_value("address2", Contact.address_2)
         self.change_field_value("phone2", Contact.phone_2)
         self.change_field_value("notes", Contact.notes)
+        if Contact.b_day is not None:
+            wd.find_element_by_name("bday").send_keys(Contact.b_day)
+        if Contact.b_month is not None:
+            wd.find_element_by_name("bmonth").send_keys(Contact.b_month)
+        if Contact.b_year is not None:
+            wd.find_element_by_name("byear").send_keys(Contact.b_year)
+        if Contact.a_day is not None:
+            wd.find_element_by_name("aday").send_keys(Contact.a_day)
+        if Contact.a_month is not None:
+            wd.find_element_by_name("amonth").send_keys(Contact.a_month)
+        if Contact.a_year is not None:
+            wd.find_element_by_name("ayear").send_keys(Contact.a_year)
 
     def new_contact_form(self, Contact):
         wd = self.app.wd
         self.fill_contact_form(Contact)
-        self.change_birthday_value(Contact.b_day, Contact.b_month, Contact.b_year)
-        self.change_anniversary_value(Contact.a_day, Contact.a_month, Contact.a_year)
         self.contact_cache = None
 
     def edit_contact_form(self, Contact):
         wd = self.app.wd
-        if Contact.b_month is not None:
-            Contact.b_month = str(int(Contact.b_month) + 1)
-        if Contact.a_month is not None:
-            Contact.a_month = str(int(Contact.a_month) + 1)
         self.fill_contact_form(Contact)
-        self.change_birthday_value(Contact.b_day, Contact.b_month, Contact.b_year)
-        self.change_anniversary_value(Contact.a_day, Contact.a_month, Contact.a_year)
         self.contact_cache = None
-
-    def change_birthday_value(self, day, month, year):
-        wd = self.app.wd
-        if day is not None:
-            wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[%s]" % (int(day) + 2)).click()
-        if month is not None:
-            wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[%s]" % (int(month) + 1)).click()
-        if year is not None:
-            wd.find_element_by_name("byear").click()
-            wd.find_element_by_name("byear").clear()
-            wd.find_element_by_name("byear").send_keys(year)
-
-    def change_anniversary_value(self, day, month, year):
-        wd = self.app.wd
-        if day is not None:
-            wd.find_element_by_xpath("//div[@id='content']/form/select[3]//option[%s]" % (int(day) + 2)).click()
-        if month is not None:
-            wd.find_element_by_xpath("//div[@id='content']/form/select[4]//option[%s]" % (int(month) + 1)).click()
-        if year is not None:
-            wd.find_element_by_name("ayear").click()
-            wd.find_element_by_name("ayear").clear()
-            wd.find_element_by_name("ayear").send_keys(year)
 
     def create(self, Contact):
         wd = self.app.wd

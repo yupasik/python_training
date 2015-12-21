@@ -12,7 +12,7 @@ def test_edit_first_contact(app):
                       avatar="E:\\avatar.jpg", title="1111", company="11", address="111111111",
                       home_phone="1111", mobile_phone="+11111", work_phone="1111", fax="11111",
                       email_1="11111@111.111", email_2="11111@111.111", email_3="11111@111.111",
-                      homepage="11", b_day="11", b_month="2", a_day="11", a_month="11", b_year="1911",
+                      homepage="11", b_day="11", b_month="January", a_day="11", a_month="July", b_year="1911",
                       a_year="2011", address_2="11", phone_2="11", notes="111")
     contact.id = old_contacts[index].id
     app.contact.edit_contact_by_index(contact, index)
