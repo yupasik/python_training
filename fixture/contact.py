@@ -84,12 +84,32 @@ class ContactHelper:
         self.return_to_home_page()
         self.contact_cache = None
 
+    def edit_contact_by_id(self, Contact, id):
+        wd = self.app.wd
+        self.open_contact_to_edit_by_id(id)
+        self.edit_contact_form(Contact)
+        wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+        self.return_to_home_page()
+        self.contact_cache = None
+
     def delete_first_contact(self):
         self.delete_contact_by_index(0)
 
     def delete_contact_by_index(self, index):
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
+        wd.switch_to_alert().accept()
+        self.return_to_home_page()
+        self.contact_cache = None
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.select_contact_by_id(id)
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
         self.return_to_home_page()
@@ -129,12 +149,22 @@ class ContactHelper:
         cell = row.find_elements_by_tag_name("td")[7]
         cell.find_element_by_tag_name("a").click()
 
+    def open_contact_to_edit_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page(wd)
+        wd.find_element_by_xpath("//input[@value='%s']/../../td[8]/a" % id).click()
+
     def open_contact_to_view_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page(wd)
         row = wd.find_elements_by_name("entry")[index]
         cell = row.find_elements_by_tag_name("td")[6]
         cell.find_element_by_tag_name("a").click()
+
+    def open_contact_to_view_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page(wd)
+        wd.find_element_by_xpath("//input[@value='%s']/../../td[7]/a" % id).click()
 
     def get_contact_info_from_edit_page(self, index):
         wd = self.app.wd
@@ -175,3 +205,10 @@ class ContactHelper:
         except AttributeError:
             phone_2 = ""
         return Contact(home_phone=home_phone, mobile_phone=mobile_phone, work_phone=work_phone, phone_2=phone_2)
+
+    def clean(self, contact):
+        return Contact(id=contact.id, first_name=contact.first_name.strip(), last_name=contact.last_name.strip(),
+                       address=contact.address.strip(), mobile_phone=contact.mobile_phone.strip(),
+                       work_phone=contact.work_phone.strip(), phone_2=contact.phone_2.strip(),
+                       email_1=contact.email_1.strip(), email_2=contact.email_2.strip(),
+                       email_3=contact.email_3.strip())
