@@ -73,6 +73,24 @@ class ContactHelper:
         self.return_to_home_page()
         self.contact_cache = None
 
+    def add_contact_to_group(self, Contact, Group):
+        wd = self.app.wd
+        self.app.open_home_page(wd)
+        self.select_contact_by_id(Contact.id)
+        wd.find_element_by_name("to_group").send_keys(Group.name)
+        wd.find_element_by_name("add").click()
+
+    def delete_contact_from_group(self, Contact, Group):
+        wd = self.app.wd
+        self.app.open_home_page(wd)
+        wd.find_element_by_name("group").send_keys(Group.name)
+        wd.find_element_by_css_selector("body").click()
+        self.select_contact_by_id(Contact.id)
+        wd.find_element_by_name("remove").click()
+        self.return_to_home_page()
+        wd.find_element_by_name("group").send_keys("[all]")
+        wd.find_element_by_css_selector("body").click()
+
     def edit_first_contact(self, Contact):
         self.edit_contact_by_index(Contact, 0)
 
@@ -208,7 +226,7 @@ class ContactHelper:
 
     def clean(self, contact):
         return Contact(id=contact.id, first_name=contact.first_name.strip(), last_name=contact.last_name.strip(),
-                       address=contact.address.strip(), mobile_phone=contact.mobile_phone.strip(),
-                       work_phone=contact.work_phone.strip(), phone_2=contact.phone_2.strip(),
-                       email_1=contact.email_1.strip(), email_2=contact.email_2.strip(),
-                       email_3=contact.email_3.strip())
+                       address=contact.address.strip(), mobile_phone=contact.mobile_phone,
+                       work_phone=contact.work_phone, phone_2=contact.phone_2,
+                       email_1=contact.email_1, email_2=contact.email_2,
+                       email_3=contact.email_3)

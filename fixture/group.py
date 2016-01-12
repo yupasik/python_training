@@ -1,7 +1,12 @@
 from model.group import Group
+from model.contact import Contact
+from random import randrange
+import random
 
 
 class GroupHelper:
+
+    contact_cache = None
 
     def __init__(self, app):
         self.app = app
@@ -74,6 +79,69 @@ class GroupHelper:
 
     def edit_first_group(self, new_group_data):
         self.edit_group_by_index(new_group_data, 0)
+
+    def return_to_home_page(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
+
+    def find_group_to_add_contact(self, Contact):
+        wd = self.app.wd
+        self.return_to_home_page()
+        groups = self.get_group_list()
+        self.return_to_home_page()
+        while 1:
+            group = random.choice(groups)
+            wd.find_element_by_name("group").send_keys(group.name)
+            wd.find_element_by_css_selector("body").click()
+            contacts = self.get_contact_list_in_group()
+            if Contact not in contacts:
+                wd.find_element_by_name("group").send_keys("[all]")
+                wd.find_element_by_css_selector("body").click()
+                return group, contacts
+
+    def group_contacts(self, Group):
+        wd = self.app.wd
+        self.return_to_home_page()
+        wd.find_element_by_name("group").send_keys(Group.name)
+        wd.find_element_by_css_selector("body").click()
+        contacts = self.get_contact_list_in_group()
+        wd.find_element_by_name("group").send_keys("[all]")
+        wd.find_element_by_css_selector("body").click()
+        return contacts
+
+    def get_contact_list(self):
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.app.open_home_page(wd)
+            self.contact_cache = []
+            for row in wd.find_elements_by_name("entry"):
+                cells = row.find_elements_by_tag_name("td")
+                address = cells[3].text
+                first_name = cells[2].text
+                last_name = cells[1].text
+                id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+                all_phones = cells[5].text
+                all_emails = cells[4].text
+                self.contact_cache.append(Contact(first_name=first_name, last_name=last_name, id=id, address=address,
+                                                  all_phones_from_homepage=all_phones,
+                                                  all_emails_from_homepage=all_emails))
+        return list(self.contact_cache)
+
+    def get_contact_list_in_group(self):
+        wd = self.app.wd
+        self.contact_cache = []
+        for row in wd.find_elements_by_name("entry"):
+            cells = row.find_elements_by_tag_name("td")
+            address = cells[3].text
+            first_name = cells[2].text
+            last_name = cells[1].text
+            id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+            all_phones = cells[5].text
+            all_emails = cells[4].text
+            self.contact_cache.append(Contact(first_name=first_name, last_name=last_name, id=id, address=address,
+                                              all_phones_from_homepage=all_phones,
+                                              all_emails_from_homepage=all_emails))
+        return list(self.contact_cache)
 
     def edit_group_by_index(self, new_group_data, index):
         wd = self.app.wd
