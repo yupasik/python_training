@@ -5,6 +5,12 @@
     <orderEntry type="jdk" jdkName="Python 3.4.3 virtualenv at E:\STUDY\python_training\env" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="geom2d" />
+    <orderEntry type="module" module-name="ironpython_training" />
+    <orderEntry type="module" module-name="python_training_mantis" />
+    <orderEntry type="module" module-name="Tests" />
+    <orderEntry type="module" module-name="AT" />
+    <orderEntry type="module" module-name="KKD" />
+    <orderEntry type="module" module-name="Tests" />
   </component>
   <component name="PackageRequirementsSettings">
     <option name="requirementsPath" value="" />

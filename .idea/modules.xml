@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://E:/scripts/GRAB/AT/.idea/AT.iml" filepath="E:/scripts/GRAB/AT/.idea/AT.iml" />
+      <module fileurl="file://E:/scripts/KKD/.idea/KKD.iml" filepath="E:/scripts/KKD/.idea/KKD.iml" />
+      <module fileurl="file://X:/Tests/.idea/Tests.iml" filepath="X:/Tests/.idea/Tests.iml" />
       <module fileurl="file://$PROJECT_DIR$/../geom2d/.idea/geom2d.iml" filepath="$PROJECT_DIR$/../geom2d/.idea/geom2d.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ironpython_training/.idea/ironpython_training.iml" filepath="$PROJECT_DIR$/../ironpython_training/.idea/ironpython_training.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/python_training.iml" filepath="$PROJECT_DIR$/.idea/python_training.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../python_training_mantis/.idea/python_training_mantis.iml" filepath="$PROJECT_DIR$/../python_training_mantis/.idea/python_training_mantis.iml" />
     </modules>
   </component>
 </project>
