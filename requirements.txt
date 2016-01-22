@@ -3,5 +3,8 @@ pytest_bdd
 selenium
 jsonpickle
 pony
+
 pymysql
 --allow-external mysql-connector-python mysql-connector-python
+lxml-3.5.0-cp34-none-win32.whl
+pytest-allure-adaptor
